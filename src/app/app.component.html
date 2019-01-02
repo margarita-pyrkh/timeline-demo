@@ -1,0 +1,28 @@
+<div class="timeline" (click)="moveCurrentTime($event)">
+  <div class="timeline__slider"
+       [style.left.%]="currentTime / videoDuration * 100">
+    <div class="timeline__slider-tip">{{currentTime | appTime}}</div>
+  </div>
+
+  <div class="timelime-box">
+    <div *ngFor="let videoElementsRow of chunckedVideoElements; let i = index"
+         class="timelime-box__row">
+      <div *ngFor="let stitch of videoElementsRow; let j = index; trackBy: trackByGuid"
+           class="timelime-box__stitch"
+           (mouseover)="onMouseOver(stitch)"
+           [style.background-color]="colors[i * chunckedVideoElements.length + j]"
+           [style.left.%]="stitch.metadata.startTime / videoDuration * 100"
+           [style.right.%]="100 - (stitch.metadata.duration + stitch.metadata.startTime) / videoDuration * 100">
+
+      </div>
+    </div>
+  </div>
+
+  <div class="timelime">
+    <div *ngFor="let point of timelinePoints; let i = index"
+         class="timelime__point"
+         [style.left.%]="i * 100 / 6">
+      {{point | appTime}}
+    </div>
+  </div>
+</div>
